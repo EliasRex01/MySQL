@@ -1,4 +1,4 @@
--- operadores between, like y in, ademas de posibles ejemplos de filtrado
+-- operadores between, like y in, ademas de posibles ejemplos de filtrado clasicos
 
 -- usando between, where y and para pedir un rango de valores, se coloca menor y mayor
 USE employees;
