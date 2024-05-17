@@ -1,4 +1,4 @@
--- Union de tablas 
+-- Union de tablas - Bases
 
 -- LLAVE PRIMARIA
 
