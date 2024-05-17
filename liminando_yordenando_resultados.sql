@@ -17,7 +17,4 @@ SELECT Name AS Ciudad, Population AS Habitantes FROM city WHERE Population < 100
 -- las letras se ordenan en alfabetico y los numeros en ascendente
 
 -- el order by funciona con datos ya consultados o "seleccionados"
-
-
-
--- Operador NUll o IS NULL
+-- Operador NUll o IS NULL opera como un definidor de elemento
