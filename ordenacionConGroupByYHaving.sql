@@ -15,6 +15,7 @@ FROM country group by Continent ORDER BY AVG(LifeExpectancy);
 
 
 
+
 -- clausula having
 -- es un analogo a where pero para datos agrupados
 -- permite hacer filtros a los resultados que obtenemos al hacer un group by
