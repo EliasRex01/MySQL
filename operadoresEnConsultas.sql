@@ -1,5 +1,4 @@
 -- Operadores aritmeticos
-SHOW TABLES;
 SELECT * FROM country;
 SELECT Name, (Population/SurfaceArea) AS "Habitantes por km2" FROM country;
 -- usar operadores ayuda a mostrar nuevas tablas en base a otras
