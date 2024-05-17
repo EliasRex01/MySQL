@@ -57,4 +57,4 @@ GROUP BY D.dept_name
 ORDER BY AVG(S.salary) DESC;
 -- departamento y salario promedio de cada departamento
 
--- primero se crea una nueva tabla con los join y luego se aplican las funciones sobre la nueva tabla
+-- Nota: primero se crea una nueva tabla con los join y luego se aplican las funciones sobre la nueva tabla
