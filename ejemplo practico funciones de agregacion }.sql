@@ -1,4 +1,4 @@
--- FUNCIONES DE AGREGACION USANDO LA TABLA numpidb
+-- FUNCIONES DE AGREGACION USANDO numpidb
 
 -- 1. Obtener el indide de masa corporal promedio para las mujeres
 -- y para los hombres
