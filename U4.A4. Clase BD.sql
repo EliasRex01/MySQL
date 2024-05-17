@@ -39,4 +39,4 @@ JOIN articulos a
 ON a.codigo_proveedor = p.codigo_proveedor
 WHERE a.ultimo_costo !=0
 GROUP BY p.desc_proveedor
-ORDER BY 1;
+ORDER BY COUNT(a.*) DESC;
