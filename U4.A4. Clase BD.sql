@@ -25,3 +25,18 @@ JOIN articulos a
 ON a.codigo_proveedor = p.codigo_proveedor
 GROUP BY p.desc_proveedor
 ORDER BY 1;
+
+
+-- Los proveedores, la cantidad de artículos proveídos por cada uno, cuál
+-- es el artículo con el ultimo costo más barato y cuál es el artículo con el
+-- ultimo costo más caro. El resultado esperado se indica abajo:
+SELECt p.desc_proveedor "PROVEEDOR",
+COUNT(a.*) "ARTICULOS",
+MIN(a.ultimo_costo) "MAS BARATO",
+MAX(a.ultimo_costo) "MAS CARO"
+FROM proveedores p
+JOIN articulos a
+ON a.codigo_proveedor = p.codigo_proveedor
+WHERE a.ultimo_costo !=0
+GROUP BY p.desc_proveedor
+ORDER BY 1;
