@@ -1,4 +1,4 @@
--- Las funciones de agregacion y como usarlas
+-- Funciones de agregacion y como usarlas
 -- una funcion de agregacion nos permite algo de una columna, una info
 -- que no se encuentra como tal guardada en la tabla sino que nos permite
 -- operar o aplicar una funcion a una determinada para extraer info
