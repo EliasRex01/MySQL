@@ -28,4 +28,3 @@ SELECT * FROM salaries WHERE salary=40000;    -- basicamente hago filtros a las 
 -- seleccionar lo que cobro en total cada empleado usando su codigo de empleado
 SELECT * FROM salaries;
 SELECT emp_no, SUM(salary) AS total_cobrado FROM salaries GROUP BY emp_no;
-
