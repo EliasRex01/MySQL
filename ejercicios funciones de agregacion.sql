@@ -1,4 +1,4 @@
--- ejercicio funcion de agregacion
+-- ejercicio funcion de agregacion, estadistico
 
 -- Encontrar un intervalo tipico para la esperanza de vida
 USE world;
