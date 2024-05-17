@@ -6,7 +6,7 @@ USE world;
 SELECT Name, SurfaceArea
 FROM country
 ORDER BY SurfaceArea  
-LIMIT 5;      -- el default de order by es ASC o ascendente
+LIMIT 5;      -- el default de order by es ASC o ascendente (no se necesita especificar)
 
 
 -- 2. Consulta para obtener los cinco empleados mas jovenes de la 
