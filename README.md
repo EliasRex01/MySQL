@@ -1,2 +1,2 @@
 # MySQL
-Comandos y código base para consultas
+comands and problems basics for postgresql
