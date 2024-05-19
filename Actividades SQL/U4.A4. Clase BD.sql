@@ -53,14 +53,14 @@ SELECT
     p.desc_proveedor AS "PROVEEDORES",
     COUNT(a.*) AS "ARTICULOS",
     MIN(a.ultimo_costo) AS "COSTO MAS BARATO",
-	(
+    (
         SELECT a1.codigo_articulo || ' - ARTICULO ' || a1.codigo_articulo 
         FROM articulos a1 
         WHERE a1.codigo_proveedor = p.codigo_proveedor 
-          AND a1.ultimo_costo = (SELECT MIN(a2.ultimo_costo)
-                                 FROM articulos a2 
-                                 WHERE a2.codigo_proveedor = p.codigo_proveedor 
-                                   AND a2.ultimo_costo != 0)
+        AND a1.ultimo_costo = (SELECT MIN(a2.ultimo_costo)
+                               FROM articulos a2 
+                               WHERE a2.codigo_proveedor = p.codigo_proveedor 
+                               AND a2.ultimo_costo != 0)
         LIMIT 1
     ) AS "EL MAS BARATO",
     MAX(a.ultimo_costo) AS "COSTO MAS CARO",
@@ -68,10 +68,10 @@ SELECT
         SELECT a3.codigo_articulo || ' - ARTICULO ' || a3.codigo_articulo 
         FROM articulos a3 
         WHERE a3.codigo_proveedor = p.codigo_proveedor 
-          AND a3.ultimo_costo = (SELECT MAX(a4.ultimo_costo)
-                                 FROM articulos a4 
-                                 WHERE a4.codigo_proveedor = p.codigo_proveedor 
-                                   AND a4.ultimo_costo != 0)
+        AND a3.ultimo_costo = (SELECT MAX(a4.ultimo_costo)
+                               FROM articulos a4 
+                               WHERE a4.codigo_proveedor = p.codigo_proveedor 
+                               AND a4.ultimo_costo != 0)
         LIMIT 1
     ) AS "EL MAS CARO"
 FROM proveedores p
