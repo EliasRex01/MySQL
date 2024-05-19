@@ -45,12 +45,15 @@ ORDER BY COUNT(a.*) DESC;
 --  Los mismos datos de la consulta anterior pero debe agregar cuál es el
 -- articulo más barato y cuál es el artículo más caro. El resultado esperado
 -- se indica abajo:
+-- Los mismos datos de la consulta anterior pero debe agregar cuál es el
+-- articulo más barato y cuál es el artículo más caro. El resultado esperado
+-- se indica abajo:
+
 SELECT 
-    p.desc_proveedor AS "PROVEEDOR",
+    p.desc_proveedor AS "PROVEEDORES",
     COUNT(a.*) AS "ARTICULOS",
-    MIN(a.ultimo_costo) AS "MAS BARATO",
-    MAX(a.ultimo_costo) AS "MAS CARO",
-    (
+    MIN(a.ultimo_costo) AS "COSTO MAS BARATO",
+	(
         SELECT a1.codigo_articulo || ' - ARTICULO ' || a1.codigo_articulo 
         FROM articulos a1 
         WHERE a1.codigo_proveedor = p.codigo_proveedor 
@@ -59,7 +62,8 @@ SELECT
                                  WHERE a2.codigo_proveedor = p.codigo_proveedor 
                                    AND a2.ultimo_costo != 0)
         LIMIT 1
-    ) AS "CODIGO ARTICULO MAS BARATO",
+    ) AS "EL MAS BARATO",
+    MAX(a.ultimo_costo) AS "COSTO MAS CARO",
     (
         SELECT a3.codigo_articulo || ' - ARTICULO ' || a3.codigo_articulo 
         FROM articulos a3 
@@ -69,7 +73,7 @@ SELECT
                                  WHERE a4.codigo_proveedor = p.codigo_proveedor 
                                    AND a4.ultimo_costo != 0)
         LIMIT 1
-    ) AS "CODIGO ARTICULO MAS CARO"
+    ) AS "EL MAS CARO"
 FROM proveedores p
 JOIN articulos a ON a.codigo_proveedor = p.codigo_proveedor
 WHERE a.ultimo_costo != 0
