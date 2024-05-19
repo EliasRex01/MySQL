@@ -17,4 +17,13 @@ ORDER BY 1; -- numero_cuenta
 
 -- 2. Despliegue la cantidad de cuentas que posee cada uno de los 3 clientes identificados
 -- en el cuadro de abajo. Véase el resultado esperado a continuación:
-
+SELECT cl.codigo_cliente, cl.nombres AS cliente, tc.tipo_cuenta,
+COUNT(cu.*) AS "cantidad"
+FROM clientes cl
+JOIN cuentas cu
+ON cl.codigo_cliente = cu.codigo_cliente
+JOIN tipos_cuentas tc
+ON cu.codigo_tipo = tc.codigo_tipo
+WHERE cl.codigo_cliente IN (1735058,3659553,647848)
+GROUP BY cl.codigo_cliente, tc.tipo_cuenta
+ORDER BY 2; -- alfabetico de cliente
