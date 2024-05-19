@@ -12,7 +12,7 @@ JOIN cuentas cu
 ON cl.codigo_cliente = cu.codigo_cliente 
 JOIN tipos_cuentas tc 
 ON cu.codigo_tipo = tc.codigo_tipo 
-where cl.codigo_cliente = 647848 or cl.codigo_cliente = 3659553
+WHERE cl.codigo_cliente IN (647848,3659553)
 ORDER BY 1; -- numero_cuenta
 
 -- 2. Despliegue la cantidad de cuentas que posee cada uno de los 3 clientes identificados
