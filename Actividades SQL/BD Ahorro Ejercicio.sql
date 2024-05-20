@@ -2,6 +2,15 @@
 -- nos ha solicitado obtener datos para el análisis de las operaciones sospechosas. Los datos
 -- solicitados deben ser idénticos a como se indican a continuación:
 
+-- tablas de la BD
+select * from clientes;   -- codigo_cliente, nombres
+select * from cuentas;    -- anho, numero_cuenta, f_apertura, 
+-- codigo_cuenta, codigo_cliente, codigo_tipo, codigo_cuenta
+select * from movimiento;  -- codigo_cuenta
+select * from tasas_interes;
+select * from tipos_cuentas;  -- tipo_cuenta, codigo_tipo
+select * from tipos_movimiento;
+
 
 -- 1. Obtenga todas las cuentas de ahorro de los 2 clientes (bajo sospecha de lavado de
 -- dinero) indicados abajo. El resultado debe ser idéntico al cuadro:
@@ -70,21 +79,40 @@ ORDER BY SUM(calcularsaldo(mo.codigo_movimiento)) DESC;
 
 -- Creacion de la funcion TransferenciaInterna
 CREATE OR REPLACE FUNCTION TransferenciaInterna(
-    cuentaOrigen INT,
-    cuentaDestino INT,
+    numeroCuentaOrigen INT,
+    numeroCuentaDestino INT,
     monto NUMERIC
 ) 
 RETURNS VARCHAR AS $$
 DECLARE
     fecha_actual DATE := CURRENT_DATE;
+    codigoCuentaOrigen INT;
+    codigoCuentaDestino INT;
 BEGIN
-    -- Inserta el movimiento de extraccion en la cuenta de origen
-    INSERT INTO movimiento (codigo_cuenta, fecha_operacion, importe, comprobante)
-    VALUES (cuentaOrigen, fecha_actual, -monto, cuentaDestino);
+    -- Buscar los códigos de cuenta correspondientes a los números de cuenta
+    SELECT codigo_cuenta INTO codigoCuentaOrigen
+    FROM cuentas
+    WHERE numero_cuenta = numeroCuentaOrigen;
 
-    -- Inserta el movimiento de deposito en la cuenta de destino
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'La cuenta de origen % no existe', numeroCuentaOrigen;
+    END IF;
+
+    SELECT codigo_cuenta INTO codigoCuentaDestino
+    FROM cuentas
+    WHERE numero_cuenta = numeroCuentaDestino;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'La cuenta de destino % no existe', numeroCuentaDestino;
+    END IF;
+
+    -- Inserta el movimiento de extracción en la cuenta de origen
     INSERT INTO movimiento (codigo_cuenta, fecha_operacion, importe, comprobante)
-    VALUES (cuentaDestino, fecha_actual, monto, cuentaOrigen);
+    VALUES (codigoCuentaOrigen, fecha_actual, -monto, numeroCuentaDestino);
+
+    -- Inserta el movimiento de depósito en la cuenta de destino
+    INSERT INTO movimiento (codigo_cuenta, fecha_operacion, importe, comprobante)
+    VALUES (codigoCuentaDestino, fecha_actual, monto, numeroCuentaOrigen);
 
     RETURN 'Transferencia exitosa';
 END;
@@ -98,14 +126,3 @@ SELECT *
 FROM vExtracto 
 WHERE codigo_cuenta IN (5576, 14004) 
 ORDER BY fecha_operacion DESC;
-
-
-
--- tablas de la BD
-select * from clientes;   -- codigo_cliente, nombres
-select * from cuentas;    -- anho, numero_cuenta, f_apertura, 
--- codigo_cuenta, codigo_cliente, codigo_tipo, codigo_cuenta
-select * from movimiento;  -- codigo_cuenta
-select * from tasas_interes;
-select * from tipos_cuentas;  -- tipo_cuenta, codigo_tipo
-select * from tipos_movimiento;
