@@ -52,3 +52,30 @@ GROUP BY (cu.numero_cuenta || '-' || cu.anho), tc.tipo_cuenta,
 cl.codigo_cliente
 ORDER BY SUM(calcularsaldo(mo.codigo_movimiento)) DESC; 
 -- saldo desc
+
+
+-- Cree una función llamada TransferenciaInterna() que permita insertar un movimiento
+-- de extracción en la cuenta de origen y un movimiento de depósito en la cuenta
+-- destino. Considere las siguientes aclaraciones:
+-- a. Para la implementar debe usar los números de cuenta, no los códigos.
+-- b. La fecha de la operación es siempre la fecha actual.
+-- c. El comprobante es el número de cuenta de destino en la extracción y el
+-- número de cuenta de origen en el movimiento de depósito.
+-- d. La función debe retornar el mensaje “Transferencia exitosa”.
+-- e. No es necesario que se controle el saldo de la cuenta de origen.
+-- f. Opcionalmente puede usar la vista vExtracto para verificar el resultado.
+-- Demuestre el uso de la función TransferenciaInterna() mediante una sola sentencia
+-- SQL que genere una transferencia por un monto de 5.000.000. El origen debe ser la
+-- cuenta número 5576 y el destino la cuenta número 14004.
+
+
+
+
+-- tablas de la BD
+select * from clientes;   -- codigo_cliente, nombres
+select * from cuentas;    -- anho, numero_cuenta, f_apertura, 
+-- codigo_cuenta, codigo_cliente, codigo_tipo, codigo_cuenta
+select * from movimiento;  -- codigo_cuenta
+select * from tasas_interes;
+select * from tipos_cuentas;  -- tipo_cuenta, codigo_tipo
+select * from tipos_movimiento;
