@@ -4,7 +4,7 @@
 
 -- Sintaxis es
 -- CREATE OR REPLACE FUNCTION nueva_funcion()
--- RETURNS INTEGER AS $$
+-- RETURNS tipo_valor AS $$
 -- BEGIN
 --     RETURN 1;
 -- END;
