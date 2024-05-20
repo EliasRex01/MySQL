@@ -124,5 +124,6 @@ SELECT TransferenciaInterna(5576, 14004, 5000000);
 -- Usando la vista vExtracto para comprobar el resultado
 SELECT * 
 FROM vExtracto 
-WHERE codigo_cuenta IN (5576, 14004) 
+WHERE numero_cuenta IN (5576, 14004) 
 ORDER BY fecha_operacion DESC;
+-- Nota: no pude comprobar por que la vista muestra el resultado de la transaccion, pido perdon
