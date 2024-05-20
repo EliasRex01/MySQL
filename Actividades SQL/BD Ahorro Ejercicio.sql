@@ -68,6 +68,36 @@ ORDER BY SUM(calcularsaldo(mo.codigo_movimiento)) DESC;
 -- SQL que genere una transferencia por un monto de 5.000.000. El origen debe ser la
 -- cuenta número 5576 y el destino la cuenta número 14004.
 
+-- Creacion de la funcion TransferenciaInterna
+CREATE OR REPLACE FUNCTION TransferenciaInterna(
+    cuentaOrigen INT,
+    cuentaDestino INT,
+    monto NUMERIC
+) 
+RETURNS VARCHAR AS $$
+DECLARE
+    fecha_actual DATE := CURRENT_DATE;
+BEGIN
+    -- Inserta el movimiento de extraccion en la cuenta de origen
+    INSERT INTO movimiento (codigo_cuenta, fecha_operacion, importe, comprobante)
+    VALUES (cuentaOrigen, fecha_actual, -monto, cuentaDestino);
+
+    -- Inserta el movimiento de deposito en la cuenta de destino
+    INSERT INTO movimiento (codigo_cuenta, fecha_operacion, importe, comprobante)
+    VALUES (cuentaDestino, fecha_actual, monto, cuentaOrigen);
+
+    RETURN 'Transferencia exitosa';
+END;
+$$ LANGUAGE plpgsql;
+
+-- Llamada a la transferencia
+SELECT TransferenciaInterna(5576, 14004, 5000000);
+
+-- Usando la vista vExtracto para comprobar el resultado
+SELECT * 
+FROM vExtracto 
+WHERE codigo_cuenta IN (5576, 14004) 
+ORDER BY fecha_operacion DESC;
 
 
 
