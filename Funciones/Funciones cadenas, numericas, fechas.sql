@@ -1,69 +1,76 @@
--- funciones para cadenas de caracteres
-funcion: LEFT(contenido, 3);
+-- Funciones para cadenas de caracteres
+
 -- left extrae una cantidad de caracteres de una cadena
 -- comenzando del lado izquierdo
-select left('elias oviedo', 2);
+SELECT SUBSTRING('elias oviedo' FROM 1 FOR 2);
 
 -- right extrae una cantidad de caracteres de una cadena
 -- comenzando del lado derecho
+SELECT SUBSTRING('elias oviedo' FROM LENGTH('elias oviedo') - 1 FOR 2);
 
--- length, devuelve la cantidad e caracteres de una expresion o campo
-select length('campo');
+-- length, devuelve la cantidad de caracteres de una expresión o campo
+SELECT LENGTH('campo');
 
--- trim, lo que hace es hace eliminacion de loas pasos iniciales y finales
+-- trim, lo que hace es eliminar los espacios iniciales y finales
 -- de una cadena
-select trim('    elias    ');
+SELECT TRIM('    elias    ');
 
--- rtim, elimina los espacios finales (espacios en blanco, comienza desde derecha)
+-- rtrim, elimina los espacios finales (espacios en blanco, comienza desde derecha)
+SELECT RTRIM('    elias    ');
 
 -- ltrim, elimina los espacios iniciales (espacios en blanco, comienza desde izquierda)
+SELECT LTRIM('    elias    ');
 
 -- usando concat con los trim
-select concat(ltrim('    ruta 2  '), 'km12');
+SELECT CONCAT(LTRIM('    ruta 2  '), 'km12');
 
 -- upper y lower
-select upper('casa');
-select lower('CASA');
+SELECT UPPER('casa');
+SELECT LOWER('CASA');
 
--- substring(contenido,posicion_actual,cant_caracteres) 
-select substring('elias oviedo', 4, 3);
+-- substring(contenido, posicion_actual, cant_caracteres) 
+SELECT SUBSTRING('elias oviedo' FROM 4 FOR 3);
 
 -- locate() ubicar la ocurrencia dentro de una cadena
-select locate('i', 'elias');     -- devuelve la posicion de la i
+SELECT POSITION('i' IN 'elias');     -- devuelve la posición de la 'i'
 
 
--- Funciones Numericas
+-- Funciones Numéricas
+
 -- mod permite hallar el resto   mod(3,4)  3 entre 2
+SELECT MOD(3, 2);
 
--- Round(dato_numerico,cant_decimales)
+-- round(dato_numerico, cant_decimales)
+SELECT ROUND(123.456, 2);
 
 -- count cuenta a partir de una columna
+SELECT COUNT(*) FROM tabla;
 
 
+-- Funciones de Fecha
 
--- Funciones de FECHA
--- Funcion CURDATE()
+-- Funcion CURRENT_DATE
 -- sirve para hallar la fecha del sistema
-select curdate();         -- da anho, mes y dia
+SELECT CURRENT_DATE;         -- da año, mes y día
 
 -- hora 
-select curtime();    -- hora, minuto y segundo
+SELECT CURRENT_TIME;    -- hora, minuto y segundo
 
 -- fecha y hora
-select current_timestamp();
+SELECT CURRENT_TIMESTAMP;
 
--- fecha de una funcion
-select date(current_timestamp());    -- el date me da solo la fecha
--- si pide la fecha de un campo y el campo tiene fecha y hora se usa el date
+-- fecha de una función
+SELECT DATE(CURRENT_TIMESTAMP);    -- el DATE me da solo la fecha
+-- si pide la fecha de un campo y el campo tiene fecha y hora se usa el DATE
 
 -- solo la hora de este tiempo
-select time(current_timestamp());
+SELECT TIME(CURRENT_TIMESTAMP);
 
--- como quitar el anho
-select year(curdate());
+-- como quitar el año
+SELECT EXTRACT(YEAR FROM CURRENT_DATE);
 
--- como quiatr solo el mes
-select mount(curdate());
+-- como quitar solo el mes
+SELECT EXTRACT(MONTH FROM CURRENT_DATE);
 
--- como quitar solo el dia
-select day(curdate());
+-- como quitar solo el día
+SELECT EXTRACT(DAY FROM CURRENT_DATE);
