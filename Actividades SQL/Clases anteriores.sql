@@ -61,3 +61,11 @@ FROM proveedores p JOIN articulos a
 ON p.codigo_proveedor = a.codigo_proveedor
 GROUP BY p.codigo_proveedor, p.desc_proveedor
 ORDER BY cantidad DESC, p.desc_proveedor;
+
+-- consultar la vista y usarla en un join con otras tablas
+SELECT v.*, p.direcc_proveedor as direcciones     -- v.* es todo lo que tenga la vista 
+FROM vProveedoresArticulos v 
+JOIN proveedores p
+ON v.codigo_proveedor = p.codigo_proveedor
+-- GROUP BY v.codigo_proveedor
+-- ORDER BY cantidad DESC, p.desc_proveedor;
