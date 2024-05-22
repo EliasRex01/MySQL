@@ -25,4 +25,19 @@ SELECT anho, SUM(total) AS totalvendido FROM pedidos
 GROUP BY anho
 ORDER BY totalvedido DESC;
 
+-- todos los clientes aun los que no compraron nada, con la sumatoria de los
+-- clientes que si compraron todo
+SELECT c.ruc, c.nombre, SUM(p.total) totalcliente
+FROM clientes c LEFT JOIN pedidos p ON p.ruc = c.ruc 
+GROUP BY c.ruc, c.nombre
+ORDER BY totalcliente DESC;
+-- LEFT Join trae todos los valores de la tabla 1 y los que cumplen condicion de la 2
+
+-- los proveedores que proveen mas articulos
+SELECT p.desc_proveedor, COUNT(a.*) AS cantidad 
+FROM proveedores p JOIN articulos a
+ON p.codigo_proveedor = a.codigo_proveedor
+GROUP BY p.desc_proveedor
+ORDER BY cantidad DESC, p.desc_proveedor;
+
 
