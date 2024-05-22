@@ -47,7 +47,17 @@ WHERE anho = 2016   -- si quiero por anho se quita la condicion
 GROUP BY anho;
 
 -- total de pedidos
-SELECT anho, numero_pedido, SUM(precio_venta*cantidad)
+SELECT anho, numero_pedido, SUM(precio_venta*cantidad) AS Total
 FROM pedidos_articulos
 WHERE anho = 2021 AND numero_pedido = 100
 GROUP BY anho, numero_pedido;
+
+-- Crear vista basica
+DROP VIEW vProveedoresArticulos;  -- si existe una vista 
+
+CREATE VIEW vProveedoresArticulos AS
+SELECT p.codigo_proveedor, p.desc_proveedor, COUNT(a.*) AS cantidad 
+FROM proveedores p JOIN articulos a
+ON p.codigo_proveedor = a.codigo_proveedor
+GROUP BY p.codigo_proveedor, p.desc_proveedor
+ORDER BY cantidad DESC, p.desc_proveedor;
