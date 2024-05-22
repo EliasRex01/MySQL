@@ -100,3 +100,4 @@ $BODY$
 LANGUAGE plpgsql;
 
 -- uso de la funcion con if e if e endif
+-- se le pasa la bandera ArticulosCostos(pProveedor, 1) o 2 para min
