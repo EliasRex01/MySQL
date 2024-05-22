@@ -34,6 +34,10 @@ END
 $BODY$
 LANGUAGE plpgsql;
 
+--- ejemplo uso
+SELECT codigo_proveedor, desc_proveedor, ArticuloMasBarato(codigo_proveedor) ElMasBarato
+  FROM proveedores;
+
 -- creacion de la funcion ArticuloMasCaro
 CREATE OR REPLACE FUNCTION ArticuloMasCaro(pProveedor int)
 RETURNS varchar(200) AS
@@ -48,7 +52,7 @@ BEGIN
       WHERE a.codigo_articulo = pProveedor
       AND a.ultimo_costo > 0
       GROUP BY codigo_articulo, descripcion
-      ORDER BY 2 ASC
+      ORDER BY 2 DESC
       LIMIT 1;
 
       -- Devuelve el parametro de salida (OUTPUT)
@@ -74,7 +78,7 @@ BEGIN
         WHERE a.codigo_articulo = pProveedor
         AND a.ultimo_costo > 0
         GROUP BY codigo_articulo, descripcion
-        ORDER BY 2 ASC
+        ORDER BY 2 DESC
         LIMIT 1;
   END IF;
 
@@ -94,3 +98,5 @@ BEGIN
 END
 $BODY$
 LANGUAGE plpgsql;
+
+-- uso de la funcion con if e if e endif
