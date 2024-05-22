@@ -54,3 +54,13 @@ ORDER BY c.nombre_ciudad);
 
 -- consultar la vista
 SELECT * FROM vista1;
+
+-- contar lod articulos pedidos por cada anho y descripcion
+SELECT COUNT(*), p.anho, a.descripcion
+FROM pedidos p JOIN pedidos_articulos pa
+ON p.anho = pa.anho AND p.numero_pedido = pa.numero_pedido
+JOIN articulos a
+ON a.codigo_articulo = pa.codigo_articulo
+GROUP BY p.anho, a.descripcion
+ORDER BY p.anho;
+
