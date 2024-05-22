@@ -18,3 +18,11 @@ DELETE FROM pedidos WHERE ruc = 2483687;
 
 -- tercero el cliente
 DELETE FROM clientes WHERE ruc = 2483687;
+
+
+-- total ventas por anho
+SELECT anho, SUM(total) AS totalvendido FROM pedidos
+GROUP BY anho
+ORDER BY totalvedido DESC;
+
+
