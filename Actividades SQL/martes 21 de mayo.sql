@@ -29,6 +29,6 @@ from pedidos p
 join clientes c
 on c.ruc = p.ruc
 group by c.nombre
-order by sum(total) desc
+order by 2 desc
 limit 10;
 
