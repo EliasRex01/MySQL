@@ -2,3 +2,34 @@
 
 SELECT p.desc_proveedor AS "PROVEEDORES", COUNT(*) AS "ARTICULOS",
 MIN(ultimo_costo) AS "COSTO MAS BARATO",
+ArticuloMasBarato(a.codigo_proveedor) AS "EL MAS BARATO",
+MAX(ultimo_costo) AS "COSTO MAS BARATO",
+ArticuloMasCaro(a.codigo_proveedor) AS "EL MAS CARO",
+FROM articulos a JOIN proveedores p
+ON a.codigo_proveedor = p.codigo_proveedor
+WHERE a.ultimo_costo > 0
+GROUP BY a.codigo_proveedor, p.codigo_proveedor
+ORDER BY 2 DESC;
+
+-- creacion de la funcion ArticuloMasBarato
+CREATE OR REPLACE FUNCTION ArticuloMasBarato(pProveedor int)
+RETURNS varchar(200) AS
+$BODY$
+DECLARE
+  vCosto numeric;
+  vArticulo varchar(130);
+BEGIN
+      SELECT codigo_articulo || ' - ' || descripcion,
+      MIN(ultimo_costo) INTO vArticulo, vCosto
+      FROM articulos a
+      WHERE a.codigo_articulo = pProveedor
+      AND a.ultimo_costo > 0
+      GROUP BY codigo_articulo, descripcion
+      ORDER BY 2 ASC
+      LIMIT 1;
+
+      -- Devuelve el parametro de salida (OUTPUT)
+      RETURN vArticulo;
+END
+$BODY$
+LANGUAGE plpgsql;
