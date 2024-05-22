@@ -40,4 +40,14 @@ ON p.codigo_proveedor = a.codigo_proveedor
 GROUP BY p.desc_proveedor
 ORDER BY cantidad DESC, p.desc_proveedor;
 
+-- promedio de ventas de cada pedido en 2016
+SELECT anho, AVG(total)
+FROM pedidos
+WHERE anho = 2016   -- si quiero por anho se quita la condicion
+GROUP BY anho;
 
+-- total de pedidos
+SELECT anho, numero_pedido, SUM(precio_venta*cantidad)
+FROM pedidos_articulos
+WHERE anho = 2021 AND numero_pedido = 100
+GROUP BY anho, numero_pedido;
