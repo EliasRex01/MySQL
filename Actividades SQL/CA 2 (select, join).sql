@@ -8,4 +8,8 @@ JOIN articulos_sucursal asu
 ON a.codigo_articulo = asu.codigo_articulo
 JOIN sucursales s
 ON asu.codigo_sucursal = s.codigo_sucursal
-GROUP BY a.codigo_articulo, ta.descripcion_tipo, s.codigo_sucursal;
+JOIN ciudades c
+ON s.codigo_sucursal = c.codigo_sucursal
+GROUP BY a.codigo_articulo, ta.descripcion_tipo, 
+  s.codigo_sucursal, c.nombre_ciudad
+ORDER BY c.nombre_ciudad;
