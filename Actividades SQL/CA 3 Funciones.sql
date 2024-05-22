@@ -33,3 +33,26 @@ BEGIN
 END
 $BODY$
 LANGUAGE plpgsql;
+
+-- creacion de la funcion ArticuloMasCaro
+CREATE OR REPLACE FUNCTION ArticuloMasCaro(pProveedor int)
+RETURNS varchar(200) AS
+$BODY$
+DECLARE
+  vCosto numeric;
+  vArticulo varchar(130);
+BEGIN
+      SELECT codigo_articulo || ' - ' || descripcion,
+      MAX(ultimo_costo) INTO vArticulo, vCosto
+      FROM articulos a
+      WHERE a.codigo_articulo = pProveedor
+      AND a.ultimo_costo > 0
+      GROUP BY codigo_articulo, descripcion
+      ORDER BY 2 ASC
+      LIMIT 1;
+
+      -- Devuelve el parametro de salida (OUTPUT)
+      RETURN vArticulo;
+END
+$BODY$
+LANGUAGE plpgsql;
