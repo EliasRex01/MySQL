@@ -56,3 +56,41 @@ BEGIN
 END
 $BODY$
 LANGUAGE plpgsql;
+
+
+-- creacion de la funcion ArticulosCostos
+-- explicacion: si le paso 1 quiero el mas caro, 2 el mas barato
+CREATE OR REPLACE FUNCTION ArticulosCostos(pProveedor bigint, pFlag integer)
+RETURNS varchar(200) AS
+$BODY$
+DECLARE
+  vCosto numeric;
+  vMensaje varchar(130);
+BEGIN
+  IF pFlag = 1 THEN -- El mas caro
+        SELECT codigo_articulo || ' - ' || descripcion,
+        MAX(ultimo_costo) INTO vArticulo, vCosto
+        FROM articulos a
+        WHERE a.codigo_articulo = pProveedor
+        AND a.ultimo_costo > 0
+        GROUP BY codigo_articulo, descripcion
+        ORDER BY 2 ASC
+        LIMIT 1;
+  END IF;
+
+  IF pFlag = 2 THEN -- El mas barato
+        SELECT codigo_articulo || ' - ' || descripcion,
+      MIN(ultimo_costo) INTO vArticulo, vCosto
+      FROM articulos a
+      WHERE a.codigo_articulo = pProveedor
+      AND a.ultimo_costo > 0
+      GROUP BY codigo_articulo, descripcion
+      ORDER BY 2 ASC
+      LIMIT 1;
+  END IF;
+
+        -- Devuelve el parametro de salida (OUTPUT)
+        RETURN vArticulo;
+END
+$BODY$
+LANGUAGE plpgsql;
