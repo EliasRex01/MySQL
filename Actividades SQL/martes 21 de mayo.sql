@@ -32,3 +32,4 @@ group by c.nombre
 order by 2 desc
 limit 10;
 
+-- como obtener el mes de una fecha, con extract u otra funcion
