@@ -64,3 +64,14 @@ ON a.codigo_articulo = pa.codigo_articulo
 GROUP BY p.anho, a.descripcion
 ORDER BY p.anho;
 
+-- (uso de having para colocar funcion agregada en la condicion) 
+-- contar lod articulos pedidos por cada anho y descripcion y 
+-- agregar un filtro para ver solo los que fueron pedidos mas de 100
+SELECT COUNT(*), p.anho, a.descripcion
+FROM pedidos p JOIN pedidos_articulos pa
+ON p.anho = pa.anho AND p.numero_pedido = pa.numero_pedido
+JOIN articulos a
+ON a.codigo_articulo = pa.codigo_articulo
+GROUP BY p.anho, a.descripcion
+HAVING COUNT(*) > 100
+ORDER BY p.anho;
