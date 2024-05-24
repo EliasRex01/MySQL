@@ -30,3 +30,13 @@ select codigo_cliente, nombres from clientes where codigo_cliente not in
 -- cantidad de personas que no tienen cuentas
 select codigo_cliente, nombres from clientes where codigo_cliente not in 
 (select codigo_cliente from cuentas)
+
+-- los que son clientes
+select * from clientes cl
+where exists (select 1 from cuentas cu where cu.codigo_tipo = 3 
+			  and cu.codigo_cliente = cl.codigo_cliente);
+			  
+-- los que no
+select distinct cl.codigo_cliente, cl.nombres from clientes cl
+where exists (select 1 from cuentas cu where cu.codigo_tipo = 3 
+			  and cu.codigo_cliente = cl.codigo_cliente);
