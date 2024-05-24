@@ -20,3 +20,13 @@ group by cl.nombres
 order by 2 desc
 limit 10;
 
+-- cuantos clientes tengo
+
+
+-- los que no tienen cuentas
+select codigo_cliente, nombres from clientes where codigo_cliente not in 
+(select codigo_cliente from cuentas)
+ 
+-- cantidad de personas que no tienen cuentas
+select codigo_cliente, nombres from clientes where codigo_cliente not in 
+(select codigo_cliente from cuentas)
