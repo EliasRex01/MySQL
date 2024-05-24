@@ -55,6 +55,7 @@ GROUP BY anho, numero_pedido;
 -- Crear vista basica
 DROP VIEW vProveedoresArticulos;  -- si existe una vista 
 
+-- la vista es dinamica, se va actualizando segun se cambie el codigo
 CREATE VIEW vProveedoresArticulos AS
 SELECT p.codigo_proveedor, p.desc_proveedor, COUNT(a.*) AS cantidad 
 FROM proveedores p JOIN articulos a
