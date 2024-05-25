@@ -77,46 +77,83 @@ ORDER BY SUM(calcularsaldo(mo.codigo_movimiento)) DESC;
 -- SQL que genere una transferencia por un monto de 5.000.000. El origen debe ser la
 -- cuenta número 5576 y el destino la cuenta número 14004.
 
--- Creacion de la funcion TransferenciaInterna
 CREATE OR REPLACE FUNCTION TransferenciaInterna(
     numeroCuentaOrigen INT,
     numeroCuentaDestino INT,
     monto NUMERIC
 ) 
-RETURNS VARCHAR AS $$
+RETURNS VARCHAR AS $BODY$
 DECLARE
-    fecha_actual DATE := CURRENT_DATE;
+    fecha_actual TIMESTAMP := now();
     codigoCuentaOrigen INT;
     codigoCuentaDestino INT;
+    saldoDisponible NUMERIC;
+    siguienteNumeroMovimientoOrigen INT;
+    siguienteNumeroMovimientoDestino INT;
 BEGIN
-    -- Buscar los códigos de cuenta correspondientes a los números de cuenta
-    SELECT codigo_cuenta INTO codigoCuentaOrigen
-    FROM cuentas
-    WHERE numero_cuenta = numeroCuentaOrigen;
+    -- Iniciar una transaccion
+    BEGIN
+        -- Bloquear las cuentas involucradas para evitar concurrencia
+        LOCK TABLE cuentas IN EXCLUSIVE MODE;
+        LOCK TABLE movimiento IN EXCLUSIVE MODE;
 
-    IF NOT FOUND THEN
-        RAISE EXCEPTION 'La cuenta de origen % no existe', numeroCuentaOrigen;
-    END IF;
+        -- Buscar los codigos de cuenta correspondientes a los numeros de cuenta
+        SELECT codigo_cuenta INTO codigoCuentaOrigen
+        FROM cuentas
+        WHERE numero_cuenta = numeroCuentaOrigen;
 
-    SELECT codigo_cuenta INTO codigoCuentaDestino
-    FROM cuentas
-    WHERE numero_cuenta = numeroCuentaDestino;
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'La cuenta de origen % no existe', numeroCuentaOrigen;
+        END IF;
 
-    IF NOT FOUND THEN
-        RAISE EXCEPTION 'La cuenta de destino % no existe', numeroCuentaDestino;
-    END IF;
+        SELECT codigo_cuenta INTO codigoCuentaDestino
+        FROM cuentas
+        WHERE numero_cuenta = numeroCuentaDestino;
 
-    -- Inserta el movimiento de extracción en la cuenta de origen
-    INSERT INTO movimiento (codigo_cuenta, fecha_operacion, importe, comprobante)
-    VALUES (codigoCuentaOrigen, fecha_actual, -monto, numeroCuentaDestino);
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'La cuenta de destino % no existe', numeroCuentaDestino;
+        END IF;
 
-    -- Inserta el movimiento de depósito en la cuenta de destino
-    INSERT INTO movimiento (codigo_cuenta, fecha_operacion, importe, comprobante)
-    VALUES (codigoCuentaDestino, fecha_actual, monto, numeroCuentaOrigen);
+        -- Verificar saldo disponible en la cuenta de origen
+        SELECT SUM(importe) INTO saldoDisponible
+        FROM movimiento
+        WHERE codigo_cuenta = codigoCuentaOrigen;
 
-    RETURN 'Transferencia exitosa';
+        IF saldoDisponible < monto THEN
+            RAISE EXCEPTION 'Saldo insuficiente en la cuenta de origen %', numeroCuentaOrigen;
+        END IF;
+
+        -- Obtener el siguiente numero de movimiento para la cuenta de origen
+        SELECT COALESCE(MAX(codigo_movimiento), 0) + 1 INTO siguienteNumeroMovimientoOrigen
+        FROM movimiento
+        WHERE codigo_cuenta = codigoCuentaOrigen;
+
+        -- Insertar el movimiento de extraccion en la cuenta de origen
+        INSERT INTO movimiento (codigo_cuenta, codigo_movimiento, fecha_operacion, importe, comprobante)
+        VALUES (codigoCuentaOrigen, siguienteNumeroMovimientoOrigen, fecha_actual, -monto, numeroCuentaDestino);
+
+        -- Obtener el siguiente numero de movimiento para la cuenta de destino
+        SELECT COALESCE(MAX(codigo_movimiento), 0) + 1 INTO siguienteNumeroMovimientoDestino
+        FROM movimiento
+        WHERE codigo_cuenta = codigoCuentaDestino;
+
+        -- Insertar el movimiento de deposito en la cuenta de destino
+        INSERT INTO movimiento (codigo_cuenta, codigo_movimiento, fecha_operacion, importe, comprobante)
+        VALUES (codigoCuentaDestino, siguienteNumeroMovimientoDestino, fecha_actual, monto, numeroCuentaOrigen);
+
+        -- Confirmar la transaccion
+        COMMIT;
+        
+        RETURN 'Transferencia exitosa';
+    EXCEPTION
+        WHEN OTHERS THEN
+            -- En caso de error, deshacer la transacción
+            ROLLBACK;
+            RAISE;
+    END;
 END;
-$$ LANGUAGE plpgsql;
+$BODY$ LANGUAGE plpgsql;
+
 
 -- Llamada a la transferencia
 SELECT TransferenciaInterna(5576, 14004, 5000000);
