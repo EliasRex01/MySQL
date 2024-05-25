@@ -1,0 +1,1 @@
+-- el triger se hace sobre la tabla que queremos disparar
