@@ -56,7 +56,7 @@ $fnc_act_total_pedidos$ LANGUAGE plpgsql;
 
 -- creacion del trigger
 CREATE TRIGGER trg_act_total_pedidos
-AFTER INSERT OR UPDATE OR DELETE
+AFTER INSERT OR UPDATE OR DELETE     -- se puede poner solo uno o dos tambien
 ON pedidos_articulos
 FOR EACH ROW EXECUTE PROCEDURE fnc_act_total_pedidos();
 
