@@ -152,3 +152,23 @@ BEGIN
         
 END
 GO
+
+
+-- Creacion de trigger
+CREATE OR REPLACE FUNCTION fnc_act_total_pedidos() 
+RETURNS TRIGGGER AS $fnc_act_total_pedidos$
+    DECLARE
+        vPorcentaje_iva, articulos.porcentaje_iva%type;   
+        -- %type indica que toma el tipo de dato de la 
+    BEGIN
+        IF (TG_OP = 'INSERT') THEN
+            SELECT porcentaje_iva INTO vPorcentaje_iva
+            FROM articulos
+            WHERE codigo_articulo = NEW.codigo_articulo;
+
+            UPDATE pedidos
+            SET total = COALESCE:(total, 0) + (NEW.PRECIO_VENTA * NEW.CANTIDAD),
+
+
+
+
