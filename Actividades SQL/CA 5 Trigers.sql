@@ -159,7 +159,7 @@ CREATE OR REPLACE FUNCTION fnc_act_total_pedidos()
 RETURNS TRIGGGER AS $fnc_act_total_pedidos$
     DECLARE
         vPorcentaje_iva, articulos.porcentaje_iva%type;   
-        -- %type indica que toma el tipo de dato de la 
+        -- %type indica que tomara el tipo de dato de la columna 
     BEGIN
         IF (TG_OP = 'INSERT') THEN
             SELECT porcentaje_iva INTO vPorcentaje_iva
@@ -168,7 +168,10 @@ RETURNS TRIGGGER AS $fnc_act_total_pedidos$
 
             UPDATE pedidos
             SET total = COALESCE:(total, 0) + (NEW.PRECIO_VENTA * NEW.CANTIDAD),
+                montoiva = COALESCE(montoiva, 0) + ((NEW.PRECIO_VENTA * NEW.CANTIDAD) - 
+                                                    ((NEW.PRECIO_VENTA * NEW.CANTIDAD) / 
+                                                    (1 + COALESCE(vPorcentaje_iva, 0)))) 
 
-
-
+            WHERE anho            = NEW.anho
+            AND numero_pedido     = NEW.numero_pedido;
 
