@@ -1,6 +1,8 @@
 -- el triger se hace sobre la tabla en la que queremos disparar el triger, 
 -- la del calculo es otra tabla
 
+-- para alterar el trigger es ALTER TRIGGER
+
 -- creacion de un trigger para insertar
 CREATE TRIGGER ins_stock               -- nombre del trigger
     ON pedidos_articulos               -- se indica sobre que tabla debe actuar
@@ -11,7 +13,8 @@ DECLARE
     @anio int,
     @num int,
     @cs int,
-    @cant
+    @cant int,
+    @cantart int
 BEGIN
 
     SET NOCOUNT ON      -- previene que existan resultados extras que interfieran con el trigger
@@ -28,13 +31,16 @@ BEGIN
     where anho = @anio and numero_pedido = @num
 
     -- la fila a actualizar
-    select * from articulos_sucursal
+    select @cantart = stock from articulos_sucursal
     where codigo_articulo = @ca and codigo_sucursal = @cs
-        
-    -- dato a actualizar del stock. (update sobre articulos_sucursal para el campo stock)
-    update articulos_sucursal
-    set stock = stock - @cant            -- una venta, osea aumenta el pedido y baja el stock
 
+    if (@cant < @cantart)     -- si cantidad a vender es menor a cantidad que tengo
+    begin
+        -- dato a actualizar del stock. (update sobre articulos_sucursal para el campo stock)
+        update articulos_sucursal
+        set stock = stock - @cant            -- una venta, osea aumenta el pedido y baja el stock
+        where codigo_articulo = @ca and codigo_sucursal = @cs
+    end
         
 END
 GO
