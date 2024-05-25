@@ -45,3 +45,16 @@ BEGIN
 END
 GO
 
+
+-- un numero de pedido que no exista en pedido_detalle
+select * from pedidos where numero_pedido 
+not in (select numero_pedido from pedidos_articulos)
+limit 10;
+
+-- borrar uno de esos datos encontrados
+delete pedidos_articulos where numero_pedido = 11 and anho = 2016;
+
+-- insertar un elemento en ese lugar vacio
+insert into (codigo_detalle, factura, codigo_articulo, precio_venta, 
+    cantidad, anho, numero_pedido)
+values (85700, 10010058866, 105262, 100000, 10, 2016, 49781)
