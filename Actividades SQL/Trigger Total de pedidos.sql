@@ -1,4 +1,4 @@
--- Creacion de trigger
+-- Creacion de la funcion
 CREATE OR REPLACE FUNCTION fnc_act_total_pedidos() 
 RETURNS TRIGGGER AS $fnc_act_total_pedidos$
     DECLARE
@@ -52,3 +52,12 @@ RETURNS TRIGGGER AS $fnc_act_total_pedidos$
         
     END;
 $fnc_act_total_pedidos$ LANGUAGE plpgsql;
+
+
+-- creacion del trigger
+CREATE TRIGGER trg_act_total_pedidos
+AFTER INSERT OR UPDATE OR DELETE
+ON pedidos_articulos
+FOR EACH ROW EXECUTE PROCEDURE fnc_act_total_pedidos();
+
+
