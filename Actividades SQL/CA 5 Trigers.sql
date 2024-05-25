@@ -12,7 +12,7 @@ BEGIN
     SET NOCOUNT ON      -- previene que existan resultados extras que interfieran con el trigger
 
     -- actualizar el stock de una sucursal, se necesita cod_sucursal y cod_articulo
-    select @ca = codigo_articulo from inserted;
+    select @ca = codigo_articulo from inserted; -- a la par que se recupera se guarda en ca
 
     -- inserted es la tabla temporal del insert
 
