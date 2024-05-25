@@ -131,7 +131,9 @@ BEGIN
     select @num = numero_pedido from deleted;
     select @cant = cantidad from deleted;
 
-    -- inserted es la tabla temporal del insert  (en este caso es copia de predidos_articulos)
+    -- para update se crean 2 tablas temp  (en este caso es copia de predidos_articulos)
+    -- la primera es deleted (anterior a modificacion)
+    -- la segunda es inserted (el dato nuevo)
 
     select @cs = codigo_sucursal from pedidos     -- codigo_sucursal se recupera de pedidos
     where anho = @anio and numero_pedido = @num
