@@ -25,12 +25,12 @@ BEGIN
     select @num = numero_pedido from inserted;
     select @cant = cantidad from inserted;
 
-    -- inserted es la tabla temporal del insert
+    -- inserted es la tabla temporal del insert  (en este caso es copia de predidos_articulos)
 
-    select @cs = codigo_sucursal from pedidos
+    select @cs = codigo_sucursal from pedidos     -- codigo_sucursal se recupera de pedidos
     where anho = @anio and numero_pedido = @num
 
-    -- la fila a actualizar
+    -- obtener la cantidad que tenemos en articulo_sucursal (se recupera)
     select @cantart = stock from articulos_sucursal
     where codigo_articulo = @ca and codigo_sucursal = @cs
 
@@ -57,4 +57,7 @@ delete pedidos_articulos where numero_pedido = 11 and anho = 2016;
 -- insertar un elemento en ese lugar vacio
 insert into (codigo_detalle, factura, codigo_articulo, precio_venta, 
     cantidad, anho, numero_pedido)
-values (85700, 10010058866, 105262, 100000, 10, 2016, 49781)
+values (85700, 10010058866, 105262, 100000, 10, 2016, 49781)    -- venta de 10
+
+-- ver los cambios 
+select * from articulos_sucursal where codigo_articulo = 105262;  
