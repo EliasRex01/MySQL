@@ -199,3 +199,13 @@ RETURNS TRIGGGER AS $fnc_act_total_pedidos$
                 RETURN NEW;
             END IF;
         END IF;
+
+        /* ???
+            IF (TG_OP = 'DELETE') THEN
+
+            RETURN OLD;
+        */
+        
+    END;
+$fnc_act_total_pedidos$ LANGUAGE plpgsql;
+
