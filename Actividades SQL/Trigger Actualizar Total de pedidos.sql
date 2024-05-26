@@ -66,3 +66,9 @@ FOR EACH ROW EXECUTE PROCEDURE fnc_act_total_pedidos();
 SELECT MAX(codigo_detalle)
 
 
+-- recomendacion del prof jorge meza:
+-- lo que hay que poner en un trigger es que aun que no haya datos relacionados
+-- no permita borrar y colocas una logica tuya del negocio y tiras un mensaje
+
+
+
