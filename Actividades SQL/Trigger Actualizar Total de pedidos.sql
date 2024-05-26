@@ -66,6 +66,7 @@ FOR EACH ROW EXECUTE PROCEDURE fnc_act_total_pedidos();
 -- realizar una insercion en la tabla pedidos_articulos
 -- crear secuencia para la columna codigo_detalle (columna no definida como autoincremental)
 SELECT MAX(codigo_detalle)
+FROM pedidos_articulos;
 
 
 -- recomendacion del prof jorge meza:
