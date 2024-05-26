@@ -61,3 +61,8 @@ ON pedidos_articulos
 FOR EACH ROW EXECUTE PROCEDURE fnc_act_total_pedidos();
 
 
+-- realizar una insercion en la tabla pedidos_articulos
+-- crear secuencia para la columna codigo_detalle (columna no definida como autoincremental)
+
+
+
