@@ -1,3 +1,5 @@
+-- seria el trigger totalizar
+
 -- Creacion de la funcion
 CREATE OR REPLACE FUNCTION fnc_act_total_pedidos() 
 RETURNS TRIGGGER AS $fnc_act_total_pedidos$
@@ -69,6 +71,11 @@ SELECT MAX(codigo_detalle)
 -- recomendacion del prof jorge meza:
 -- lo que hay que poner en un trigger es que aun que no haya datos relacionados
 -- no permita borrar y colocas una logica tuya del negocio y tiras un mensaje
+-- es decir se puede hacer un trigger que implemente alguna logica que realice algo
+-- basado en las reglas de mi empresa
 
+-- ejemplo: un cliente no tiene ningun pedido pero no se quiere que se borre
+-- y se coloca un trigger donde dice "no se permite borrar ningun cliente"
+-- y asi el trigger no deja borrar el cliente
 
 
