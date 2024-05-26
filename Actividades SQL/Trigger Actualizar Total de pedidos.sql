@@ -46,9 +46,9 @@ RETURNS TRIGGGER AS $fnc_act_total_pedidos$
             END IF;
         END IF;
 
-        /* ???
+        /* ??? IF (TG_OP = 'DELETE') THEN
             IF (TG_OP = 'DELETE') THEN
-
+                -- debe restar del total para volver a reponer
             RETURN OLD;
         */
         
@@ -78,4 +78,6 @@ SELECT MAX(codigo_detalle)
 -- y se coloca un trigger donde dice "no se permite borrar ningun cliente"
 -- y asi el trigger no deja borrar el cliente
 
-
+-- los triggers sirven para las ventas, controlar stock, varias cosas.
+-- TG_OP es una variable propia de postgresql
+-- 
