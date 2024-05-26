@@ -59,10 +59,10 @@ CREATE TRIGGER trg_act_total_pedidos
 AFTER INSERT OR UPDATE OR DELETE     -- se puede poner solo uno o dos tambien
 ON pedidos_articulos
 FOR EACH ROW EXECUTE PROCEDURE fnc_act_total_pedidos();
-
+-- antes o despues de la operacion se puede disparar el trigger
 
 -- realizar una insercion en la tabla pedidos_articulos
 -- crear secuencia para la columna codigo_detalle (columna no definida como autoincremental)
-
+SELECT MAX(codigo_detalle)
 
 
