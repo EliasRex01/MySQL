@@ -1,4 +1,0 @@
--- marcar las filas con formatos de fecha
--- marcar buscar y reemplazar y cambiar la letra del signo por vacio
--- poner como entero eliminando los decimales
--- guardar como csv
