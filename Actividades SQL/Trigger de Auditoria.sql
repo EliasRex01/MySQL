@@ -1,0 +1,1 @@
+-- como hacer el trigger de auditoria
