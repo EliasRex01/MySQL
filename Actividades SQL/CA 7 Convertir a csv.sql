@@ -4,6 +4,11 @@
 -- guardar como csv
 -- Eliminar las tildas y los espacios de los nombres de columnas
 
+-- en postgresql se debe crear primero la tabla antes de importar
+-- se puede crear la tabla con los nombres de las columnas pero sin los datos
+-- se puede abrir el csv con exel y formatear para luego copiar los nombres de columnas
+-- se le agrega un tipo de valor en una hoja aparte del excel
+
 -- importar archivos planos desde el gestor postgresql
 -- 1. crear la bd
 -- 2. click en la bd y opcion task / import flat file
