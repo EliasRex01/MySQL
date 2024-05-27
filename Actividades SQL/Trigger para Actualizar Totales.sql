@@ -110,3 +110,6 @@ SELECT cl.ruc, cl.nombre, SUM(p.total) AS TotalPedidos
 FROM clientes cl JOIN pedidos p ON cl.ruc = p.ruc
 GROUP BY cl.ruc, cl.nombre
 ORDER BY 3 DESC;
+
+-- uso de la vista
+SELECT * FROM vClientesPedidos WHERE nombre LIKE "Lopez";
