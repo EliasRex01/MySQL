@@ -68,6 +68,20 @@ FOR EACH ROW EXECUTE PROCEDURE fnc_act_total_pedidos();
 SELECT MAX(codigo_detalle)
 FROM pedidos_articulos;
 
+-- uso del trigger
+SELECT * FROM pedidos WHERE numero_pedido = 59219;
+-- 130000 = 1 articulo
+-- 276000 = 2 articulos
+
+-- relizar la insercion de ese dato copiando su informacion y ver los cambios en total por ej
+SELECT * FROM pedidos_articulos WHERE numero_pedido = 59219;
+INSERT INTO pedidos_articulos (codigo_detalle, factura, codigo_articulo, precio_venta, 
+    cantidad, anho, numero_pedido)
+VALUES (9999999999, '10010059219', '317705644', '130000', 1, 2016, 59200)
+
+--probar update
+UPDATE pedidos_articulos SET cantidad = 2
+    WHERE numero_pedido = 76607;
 
 -- recomendacion del prof jorge meza:
 -- lo que hay que poner en un trigger es que aun que no haya datos relacionados
@@ -81,4 +95,5 @@ FROM pedidos_articulos;
 
 -- los triggers sirven para las ventas, controlar stock, varias cosas.
 -- TG_OP es una variable propia de postgresql
+
 -- 
