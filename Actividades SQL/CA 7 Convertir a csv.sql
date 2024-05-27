@@ -8,7 +8,16 @@
 -- 1. crear la bd
 -- 2. click en la bd y opcion task / import flat file
 
--- buscar los valores distintos
+-- buscar los valores distintos (distinct elimina las filas repetidas)
 SELECT DISTINCT chapa, vehiculo FROM automoviles;
 
+-- crear una tabla no normalizada
+SELECT DISTINCT ruccliente, razonsocial
+INTO clientes
+FROM tmprepartos;
 
+-- si no hay pk se crea
+ALTER TABLE repartos_detalle ADD codigo_detalle BIGINT IDENTIFY;
+
+-- asi se agrega una pk
+ALTER TABLE vehiculo ADD PRIMARY KEY (chapa);
