@@ -18,3 +18,9 @@ SELECT (codigo_articulo, descripcion, ultimo_costo, costo_promedio, precio_unita
     porcentaje_iva, codigo_tipo, codigo_proveedor)
 FROM deleted;
 
+
+-- select a tabla auditoria
+select * from articulosAUDIT;
+
+
+
