@@ -23,4 +23,5 @@ FROM deleted;
 select * from articulosAUDIT;
 
 
-
+-- en el insert se puede usar un select para insertar valores
+-- en el update se puede usar select para modificar valores
