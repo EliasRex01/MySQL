@@ -96,4 +96,5 @@ UPDATE pedidos_articulos SET cantidad = 2
 -- los triggers sirven para las ventas, controlar stock, varias cosas.
 -- TG_OP es una variable propia de postgresql
 
+-- para modificar el trigger se puede modiicar la funcion o modificar el trigger directo
 -- 
