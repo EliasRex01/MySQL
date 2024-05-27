@@ -21,3 +21,6 @@ ALTER TABLE repartos_detalle ADD codigo_detalle BIGINT IDENTIFY;
 
 -- asi se agrega una pk
 ALTER TABLE vehiculo ADD PRIMARY KEY (chapa);
+
+-- se agregan fk si faltan
+ALTER TABLE repartos ADD FOREIGN KEY (chapa) REFERENCES vehiculo(chapa);
