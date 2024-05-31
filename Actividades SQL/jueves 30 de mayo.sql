@@ -16,3 +16,12 @@ where numero_cuenta = '100100123'
 order by fecha desc;
 
 -- en una sola sentencia cual es el saldo de mi cuenta modificando el anterior codigo
+
+
+Select numero_cuenta,
+Sum(ingreso) depósitos,
+Sum(egreso) cheques,
+Sum(ingreso) - sum(egreso) saldo
+from cheques
+Order by 1 desc
+Limit 1;
