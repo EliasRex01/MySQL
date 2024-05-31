@@ -25,3 +25,6 @@ Sum(ingreso) - sum(egreso) saldo
 from cheques
 Order by 1 desc
 Limit 1;
+
+
+-- muestre el saldo linea por linea usando calcularsaldo
