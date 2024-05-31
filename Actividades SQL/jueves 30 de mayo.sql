@@ -9,3 +9,10 @@ select * from chequera
 where numero_chequera and fecha
 order by 1 desc
 limit 1;
+
+-- uso de la vista
+select * from vextractocuentasv
+where numero_cuenta = '100100123'
+order by fecha desc;
+
+
