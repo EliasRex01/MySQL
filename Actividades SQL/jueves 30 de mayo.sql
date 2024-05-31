@@ -15,4 +15,4 @@ select * from vextractocuentasv
 where numero_cuenta = '100100123'
 order by fecha desc;
 
-
+-- en una sola sentencia cual es el saldo de mi cuenta modificando el anterior codigo
