@@ -28,3 +28,8 @@ Limit 1;
 
 
 -- muestre el saldo linea por linea usando calcularsaldo
+select *,
+calcularsaldo(numero_cuenta, numero, operacion) as saldo
+from vextractocuentas v
+where numero_cuenta = '100100123'
+order by fecha desc;
